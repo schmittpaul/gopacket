@@ -151,11 +151,7 @@ func (r *Ring) ReadPacketDataTo(data []byte) (ci gopacket.CaptureInfo, err error
 		int64(r.pkthdr.ts.tv_usec)*1000) // convert micros to nanos
 	ci.CaptureLength = int(r.pkthdr.caplen)
 	ci.Length = int(r.pkthdr.len)
-	if r.useExtendedPacketHeader {
-		ci.InterfaceIndex = int(r.pkthdr.extended_hdr.if_index)
-	} else {
-		ci.InterfaceIndex = r.interfaceIndex
-	}
+	ci.InterfaceIndex = r.interfaceIndex
 	r.mu.Unlock()
 	return
 }
